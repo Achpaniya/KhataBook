@@ -2,7 +2,7 @@ import 'dart:ui';
 
 /* LIST OF COLORS */
 
-const primaryColor = Color(0xFF004A27);
+const primaryColor = Color.fromARGB(255, 235, 14, 18);
 
 const secondaryColor = Color(0xFF272727);
 const accentColor = Color(0xFF001BFF);

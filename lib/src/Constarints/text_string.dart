@@ -7,7 +7,7 @@ const String welcomeSubtitle =
     "Let's put your creativity on the development highway, craft apps that everyone love.";
 
 // login screen
-const String loginTitle = "Welcome Back,";
+const String loginTitle = "Welcome Back";
 const String loginSubTitle =
     "Discover limitless choices and unmatched convenience.";
 const String rememberMe = "Remember Me?";

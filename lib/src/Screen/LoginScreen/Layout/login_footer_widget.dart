@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:khata_book/src/Constarints/images.dart';
 import 'package:khata_book/src/Constarints/text_string.dart';
+// import 'package:khata_book/src/Screen/SignUp_Screen/Layout/signup_screen_widget.dart';
+import 'package:khata_book/src/Screen/SignUp_Screen/signup_Screen.dart';
 
 class LoginFooterWidget extends StatelessWidget {
   const LoginFooterWidget({
@@ -87,7 +89,7 @@ class LoginFooterWidget extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        /* TextButton(
+        /*   TextButton(
           onPressed: () {
             Navigator.pushNamed(context, 'signup');
           },
@@ -110,7 +112,7 @@ class LoginFooterWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'DontHaveAnAccount',
+              'Don\'tHaveAnAccount?',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             TextButton(
@@ -131,13 +133,16 @@ class LoginFooterWidget extends StatelessWidget {
                 // Simulate a delay of 3 seconds before navigating
                 Future.delayed(const Duration(seconds: 1), () {
                   Navigator.pop(context); // Close the dialog
-                  Navigator.pushNamed(
-                      context, 'signup'); // Navigate to signup screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SignupScreen()),
+                  ); // Navigate to signup screen
                 });
               },
               child: Text(
                 signupText.toUpperCase(),
-                style: const TextStyle(color: Colors.green),
+                // style: const TextStyle(color: Colors.green),
               ),
             ),
           ],

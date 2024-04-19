@@ -121,7 +121,7 @@ class _LoginFormState extends State<LoginForm> {
                       const SizedBox(
                         width: 5,
                       ),
-                      const Text('rememberMe'),
+                      const Text('RememberMe'),
                     ],
                   ),
                   TextButton(
@@ -130,7 +130,7 @@ class _LoginFormState extends State<LoginForm> {
                     },
                     child: const Text(
                       'ForgetPassword',
-                      style: TextStyle(color: Colors.black),
+                      // style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],
