@@ -30,7 +30,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   subTitle: signUpSubTitle,
                   crossAxisAlignment: CrossAxisAlignment.center,
                 ),
-                SignupFormWidget(),
+                // SignupFormWidget(),
+                SignupFormWidget()
               ],
             ),
           ),

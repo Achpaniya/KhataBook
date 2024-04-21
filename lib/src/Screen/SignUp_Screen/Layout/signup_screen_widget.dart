@@ -5,6 +5,7 @@ import 'package:khata_book/src/Constarints/colors.dart';
 import 'package:khata_book/src/Constarints/sizes.dart';
 import 'package:khata_book/src/Constarints/text_string.dart';
 import 'package:khata_book/src/Screen/LoginScreen/Layout/login_screen.dart';
+import 'package:khata_book/src/features/authentication/controllers/email_password_signup.dart';
 
 class SignupFormWidget extends StatefulWidget {
   const SignupFormWidget({
@@ -16,13 +17,13 @@ class SignupFormWidget extends StatefulWidget {
 }
 
 class _SignupFormWidgetState extends State<SignupFormWidget> {
+  String dropdownValue = 'Vendor'; // Default dropdown value
   bool? isChecked = false;
-
   bool _showPassword = true;
   bool _showConfirmpassword = true;
 
   final _formKey = GlobalKey<FormState>();
-  // final FirebaseAuthService _auth = FirebaseAuthService();
+  final FirebaseAuthService _auth = FirebaseAuthService();
 
   final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -181,6 +182,28 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
             const SizedBox(
               height: 25,
             ),
+            DropdownButtonFormField<String>(
+              value: dropdownValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              },
+              items: <String>['Agent', 'Vendor']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              decoration: const InputDecoration(
+                labelText: 'Select a Role',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
             Row(
               children: [
                 SizedBox(
@@ -199,6 +222,12 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                 ),
                 const SizedBox(
                   width: 12,
+                ),
+
+                //Dropdown menu
+
+                const SizedBox(
+                  height: 20,
                 ),
                 const Expanded(
                   child: Text.rich(
@@ -219,18 +248,14 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                           text: and,
                           style: TextStyle(
                             fontSize: fontSize,
-                            // color: primaryColor,
                             decoration: TextDecoration.underline,
-                            // decorationColor: primaryColor
                           ),
                         ),
                         TextSpan(
                             text: termsCondition,
                             style: TextStyle(
                               fontSize: fontSize,
-                              // color: primaryColor,
                               decoration: TextDecoration.underline,
-                              // decorationColor: primaryColor,
                             )),
                       ],
                     ),
@@ -255,6 +280,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                 ),
               ),
             ),
+
             /* TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, 'login');
@@ -373,5 +399,13 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
         ),
       ),
     );
+
+    void_signUp() async {
+      String fullname = _fullnameController.text;
+      String password = _passwordController.text;
+      String phone = _phoneController.text;
+      String email = _emailController.text;
+      String confirmPassword = _confirmPasswordController.text;
+    }
   }
 }
