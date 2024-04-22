@@ -1,11 +1,13 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_print, use_build_context_synchronously
+// ignore_for_file: unnecessary_null_comparison, avoid_print, use_build_context_synchronously, unused_element
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:khata_book/src/Constarints/colors.dart';
 import 'package:khata_book/src/Constarints/sizes.dart';
 import 'package:khata_book/src/Constarints/text_string.dart';
 import 'package:khata_book/src/Screen/LoginScreen/Layout/login_screen.dart';
-import 'package:khata_book/src/features/authentication/controllers/email_password_signup.dart';
+import 'package:khata_book/src/features/authentication/controller/emailpassSignup.dart';
 
 class SignupFormWidget extends StatefulWidget {
   const SignupFormWidget({
@@ -17,7 +19,13 @@ class SignupFormWidget extends StatefulWidget {
 }
 
 class _SignupFormWidgetState extends State<SignupFormWidget> {
-  String dropdownValue = 'Vendor'; // Default dropdown value
+  // String dropdownValue = 'Vendor'; // Default dropdown value
+
+  // Variables
+  var options = ["Agent", "Vendor"];
+  String? _selectedVal = "Vendor";
+  var role = "Vendor";
+
   bool? isChecked = false;
   bool _showPassword = true;
   bool _showConfirmpassword = true;
@@ -31,6 +39,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final TextEditingController _roleController = TextEditingController();
 
   @override
   void dispose() {
@@ -39,6 +48,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _roleController.dispose();
     super.dispose();
   }
 
@@ -182,7 +192,32 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
             const SizedBox(
               height: 25,
             ),
+
+            //Dropdown menu
             DropdownButtonFormField<String>(
+              isDense: true,
+              isExpanded: false,
+              value: _selectedVal,
+              items: options
+                  .map((e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(e),
+                      ))
+                  .toList(),
+              onChanged: (newValueSelected) {
+                setState(() {
+                  _selectedVal = newValueSelected!;
+                  role = newValueSelected;
+                });
+              },
+              icon: const Icon(Icons.arrow_drop_down_circle),
+              decoration: const InputDecoration(
+                labelText: "Choose a role",
+                prefixIcon: Icon(Icons.people_alt_outlined),
+                border: UnderlineInputBorder(),
+              ),
+            ),
+            /*  DropdownButtonFormField<String>(
               value: dropdownValue,
               onChanged: (String? newValue) {
                 setState(() {
@@ -200,7 +235,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                 labelText: 'Select a Role',
                 border: OutlineInputBorder(),
               ),
-            ),
+            ), */
             const SizedBox(
               height: 25,
             ),
@@ -223,9 +258,6 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                 const SizedBox(
                   width: 12,
                 ),
-
-                //Dropdown menu
-
                 const SizedBox(
                   height: 20,
                 ),
@@ -270,10 +302,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
+                  _signUp();
                 },
                 child: Text(
                   signupText.toUpperCase(),
@@ -351,7 +380,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
     );
   }
 
-  /* void _signUp() async {
+  void _signUp() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) return;
 
@@ -365,7 +394,8 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
 
     if (user != null) {
       print('User created sucessfully');
-      Navigator.pushNamed(context, 'emailverify');
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
     } else {
       print('Some error occur');
     }
@@ -376,18 +406,20 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
       _phoneController.text.trim(),
       _emailController.text.trim(),
       _passwordController.text.trim(),
+      _roleController.text.trim(),
     );
   }
- */
-  /*  Future addUserDetails(
-      String fullName, String phone, String email, String password) async {
+
+  Future addUserDetails(String fullName, String phone, String email,
+      String password, String role) async {
     await FirebaseFirestore.instance.collection('users').add({
       'Full Name': fullName,
       'Phone': phone,
       'Email': email,
       'Password': password,
+      'Role': role,
     });
-  } */
+  }
 
   void _showLoadingDialog(BuildContext context) {
     showDialog(
@@ -399,13 +431,5 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
         ),
       ),
     );
-
-    void_signUp() async {
-      String fullname = _fullnameController.text;
-      String password = _passwordController.text;
-      String phone = _phoneController.text;
-      String email = _emailController.text;
-      String confirmPassword = _confirmPasswordController.text;
-    }
   }
 }

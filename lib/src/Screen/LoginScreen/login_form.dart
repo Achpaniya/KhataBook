@@ -1,6 +1,10 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
+// ignore_for_file: avoid_print, use_build_context_synchronously, unused_field, unused_element
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:khata_book/src/Screen/Dashboard/dashboard_screen.dart';
+
+import '../../features/authentication/controller/emailpassSignup.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -18,8 +22,8 @@ class _LoginFormState extends State<LoginForm> {
 
   final _formkey = GlobalKey<FormState>();
 
-  /* login with email and password
-  final FirebaseAuthService _auth = FirebaseAuthService(); */
+  // login with email and password
+  final FirebaseAuthService _auth = FirebaseAuthService();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -55,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
                   }
                 },
                 onSaved: (value) {
-                  // _emailController.text = value!;
+                  _emailController.text = value!;
                 },
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
@@ -139,7 +143,7 @@ class _LoginFormState extends State<LoginForm> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // _signIn();
+                    _signIn();
                   },
                   child: const Text('Login'),
                 ),
@@ -149,7 +153,7 @@ class _LoginFormState extends State<LoginForm> {
         ));
   }
 
-  /* void _signIn() async {
+  void _signIn() async {
     final isValid = _formkey.currentState!.validate();
     if (!isValid) return;
 
@@ -163,13 +167,16 @@ class _LoginFormState extends State<LoginForm> {
     if (user != null) {
       print('Login sucessfully');
 
-      Navigator.pushNamed(context, 'dashboard');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const DashboardScreen()),
+      );
     } else {
       print('some error occured.');
     }
-  } */
+  }
 
-  /* void _showErrorDialog(BuildContext context, String message) {
+  void _showErrorDialog(BuildContext context, String message) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -183,7 +190,7 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
-  } */
+  }
 
   void _showLoadingDialog(BuildContext context) {
     showDialog(
